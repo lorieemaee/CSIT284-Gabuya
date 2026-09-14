@@ -4,7 +4,9 @@ void main() {
   runApp(
     const MaterialApp(
       home: Scaffold(
-        body: Text('Hello World'),
+        body: Center(
+          child: Text('Hello World'),
+        ),
       ),
     ),
   );
