@@ -35,17 +35,32 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              currentQuestion.text,
-              style: const TextStyle(
-                color: Color(0xFF1D2335), 
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                height: 1.4, 
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blueAccent.withOpacity(0.08),
+                    blurRadius: 15,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
               ),
-              textAlign: TextAlign.center,
+              child: Text(
+                currentQuestion.text,
+                style: const TextStyle(
+                  color: Color(0xFF1D2335), 
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  height: 1.4, 
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
             const SizedBox(height: 40),
+            
             ...currentQuestion.getShuffledAnswers().map((answer) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 16),

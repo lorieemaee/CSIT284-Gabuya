@@ -12,7 +12,7 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  
+  // 1. Create a list to store chosen answers
   List<String> selectedAnswers = []; 
   var activeScreen = 'start-screen';
 
