@@ -13,12 +13,12 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
-  // 2. Keep track of the current question index (starts at 0)
+  
   var currentQuestionIndex = 0;
 
   // 3. This function moves to the next question
   void answerQuestion(String selectedAnswer) {
-    widget.onSelectAnswer(selectedAnswer); // Pass the answer up to quiz.dart
+    widget.onSelectAnswer(selectedAnswer); 
     
     setState(() {
       currentQuestionIndex++; //balhin to next question
@@ -54,7 +54,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
                 padding: const EdgeInsets.only(bottom: 12),
                 child: AnswerButton(
                   answerText: answer,
-                  // 5. Trigger the function when tapped!
+                 
                   onTap: () {
                     answerQuestion(answer);
                   }, 
