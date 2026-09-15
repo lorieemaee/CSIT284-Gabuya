@@ -8,36 +8,49 @@ class QuestionsSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 350,
+      height: 400,
       child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(), 
         child: Column(
           children: summaryData.map((data) {
             final isCorrect = data['user_answer'] == data['correct_answer'];
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+            return Container(
+              margin: const EdgeInsets.only(bottom: 16),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24), 
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blueAccent.withOpacity(0.08), 
+                    blurRadius: 15,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 30,
-                    height: 30,
+                    width: 32,
+                    height: 32,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: isCorrect
-                          ? Colors.greenAccent.shade700
-                          : Colors.redAccent.shade200,
+                          ? const Color(0xFF4ADE80) 
+                          : const Color(0xFFF87171), 
                       shape: BoxShape.circle,
                     ),
                     child: Text(
                       ((data['question_index'] as int) + 1).toString(),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,24 +58,26 @@ class QuestionsSummary extends StatelessWidget {
                         Text(
                           data['question'] as String,
                           style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF1D2335), 
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                        const SizedBox(height: 5),
+                        const SizedBox(height: 8),
                         Text(
                           data['user_answer'] as String,
                           style: TextStyle(
+                            fontWeight: FontWeight.w500,
                             color: isCorrect
-                                ? Colors.greenAccent
-                                : Colors.redAccent.shade100,
+                                ? const Color(0xFF4ADE80)
+                                : const Color(0xFFF87171),
                           ),
                         ),
                         Text(
                           data['correct_answer'] as String,
                           style: const TextStyle(
-                            color: Colors.tealAccent,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF4A7FFF), 
                           ),
                         ),
                       ],

@@ -12,7 +12,7 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  // 1. Create a list to store chosen answers
+  
   List<String> selectedAnswers = []; 
   var activeScreen = 'start-screen';
 
@@ -53,11 +53,12 @@ class _QuizState extends State<Quiz> {
     }
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false, 
       home: Scaffold(
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.teal.shade700, Colors.blue.shade900],
+              colors: [Color(0xFFF3F8FF), Color(0xFFE2ECFE)], 
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),

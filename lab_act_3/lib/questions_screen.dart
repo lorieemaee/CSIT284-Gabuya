@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'answer_button.dart';
-import 'package:lab_act_3/data/questions.dart';
+import 'data/questions.dart';
 
 class QuestionsScreen extends StatefulWidget {
   // 1. We require a function from quiz.dart to collect the answer
@@ -13,13 +13,11 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionsScreenState extends State<QuestionsScreen> {
-  
   var currentQuestionIndex = 0;
 
   // 3. This function moves to the next question
   void answerQuestion(String selectedAnswer) {
     widget.onSelectAnswer(selectedAnswer); 
-    
     setState(() {
       currentQuestionIndex++; //balhin to next question
     });
@@ -27,7 +25,6 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     final currentQuestion = questions[currentQuestionIndex];
 
     return SizedBox(
@@ -41,20 +38,19 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
             Text(
               currentQuestion.text,
               style: const TextStyle(
-                color: Colors.white,
+                color: Color(0xFF1D2335), 
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
+                height: 1.4, 
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 30),
-            
+            const SizedBox(height: 40),
             ...currentQuestion.getShuffledAnswers().map((answer) {
               return Padding(
-                padding: const EdgeInsets.only(bottom: 12),
+                padding: const EdgeInsets.only(bottom: 16),
                 child: AnswerButton(
                   answerText: answer,
-                 
                   onTap: () {
                     answerQuestion(answer);
                   }, 

@@ -19,7 +19,6 @@ class ResultsScreen extends StatelessWidget {
       summary.add({
         'question_index': i,
         'question': questions[i].text,
-
         'correct_answer': questions[i].answers[0], 
         'user_answer': chosenAnswers[i]
       });
@@ -47,23 +46,31 @@ class ResultsScreen extends StatelessWidget {
             Text(
               'You answered $numCorrectQuestions out of $numTotalQuestions questions correctly, cuh!',
               style: const TextStyle(
-                color: Colors.amber,
+                color: Color(0xFF4A7FFF), 
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w900,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
             
-            
-           QuestionsSummary(summaryData),
+            QuestionsSummary(summaryData),
             
             const SizedBox(height: 30),
-            TextButton.icon(
+            ElevatedButton.icon(
               onPressed: onRestart,
-              style: TextButton.styleFrom(foregroundColor: Colors.white),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF4A7FFF),
+                foregroundColor: Colors.white,
+                elevation: 8,
+                shadowColor: const Color(0xFF4A7FFF).withOpacity(0.5),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
               icon: const Icon(Icons.refresh),
-              label: const Text('Restart Quiz brotha!'),
+              label: const Text('Restart Quiz brotha!', style: TextStyle(fontWeight: FontWeight.bold)),
             )
           ],
         ),
