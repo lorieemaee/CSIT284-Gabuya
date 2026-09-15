@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'start_screen.dart';
+import 'questions_screen.dart';
+import 'data/questions.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -9,6 +11,8 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  // 1. Create a list to store chosen answers
+  List<String> selectedAnswers = []; 
   var activeScreen = 'start-screen';
 
   void switchScreen() {
@@ -17,8 +21,34 @@ class _QuizState extends State<Quiz> {
     });
   }
 
+ 
+  void chooseAnswer(String answer) {
+    selectedAnswers.add(answer);
+
+    if (selectedAnswers.length == questions.length) {
+      setState(() {
+        activeScreen = 'results-screen'; // next step / task (result screen)
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    
+    Widget screenWidget = StartScreen(switchScreen);
+
+    if (activeScreen == 'questions-screen') {
+      screenWidget = QuestionsScreen(onSelectAnswer: chooseAnswer);
+    } else if (activeScreen == 'results-screen') {
+      
+      screenWidget = const Center(
+        child: Text(
+          'Quiz Completed!',
+          style: TextStyle(color: Colors.white, fontSize: 24),
+        ),
+      );
+    }
+
     return MaterialApp(
       home: Scaffold(
         body: Container(
@@ -29,14 +59,7 @@ class _QuizState extends State<Quiz> {
               end: Alignment.bottomRight,
             ),
           ),
-          child: activeScreen == 'start-screen'
-              ? StartScreen(switchScreen)
-              : const Center(
-                  child: Text(
-                    'questions to be shown here, in the making pa',
-                    style: TextStyle(color: Colors.white, fontSize: 24),
-                  ),
-                ),
+          child: screenWidget,
         ),
       ),
     );
