@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'data/questions.dart';
+import 'questions_summary.dart';
 
 class ResultsScreen extends StatelessWidget {
   const ResultsScreen({
@@ -55,10 +56,7 @@ class ResultsScreen extends StatelessWidget {
             const SizedBox(height: 30),
             
             
-            const Text(
-              'Detailed summary...', 
-              style: TextStyle(color: Colors.white),
-            ), 
+           QuestionsSummary(summaryData),
             
             const SizedBox(height: 30),
             TextButton.icon(
