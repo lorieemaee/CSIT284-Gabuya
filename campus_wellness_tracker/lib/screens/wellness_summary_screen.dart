@@ -16,6 +16,9 @@ class WellnessSummaryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final isLandscape =
+        screenSize.width > screenSize.height && screenSize.width >= 560;
     final total = scores.fold<int>(0, (sum, score) => sum + score);
     final percentage = (total / (wellnessQuestions.length * 3) * 100).round();
     final title = switch (percentage) {
@@ -47,92 +50,32 @@ class WellnessSummaryScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 18),
-          Container(
-            padding: const EdgeInsets.fromLTRB(22, 24, 22, 22),
-            decoration: BoxDecoration(
-              color: AppColors.mint,
-              borderRadius: BorderRadius.circular(26),
-            ),
-            child: Column(
+          if (isLandscape)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 76,
-                  height: 76,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Text(
-                      '$percentage',
-                      style: const TextStyle(
-                        color: AppColors.green,
-                        fontSize: 27,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
+                Expanded(
+                  child: _buildScoreCard(
+                    percentage: percentage,
+                    title: title,
+                    message: message,
+                    total: total,
                   ),
                 ),
-                const SizedBox(height: 15),
-                Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: -0.7,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  message,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Color(0xFF526A60),
-                    fontSize: 14,
-                    height: 1.5,
-                  ),
-                ),
-                const SizedBox(height: 13),
-                Text(
-                  '$total out of ${wellnessQuestions.length * 3} points',
-                  style: const TextStyle(
-                    color: Color(0xFF526A60),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                const SizedBox(width: 18),
+                Expanded(child: _buildWellnessBreakdown()),
               ],
+            )
+          else ...[
+            _buildScoreCard(
+              percentage: percentage,
+              title: title,
+              message: message,
+              total: total,
             ),
-          ),
-          const SizedBox(height: 22),
-          const Text(
-            'YOUR WELLNESS PICTURE',
-            style: TextStyle(
-              color: Color(0xFF718078),
-              fontSize: 11,
-              fontWeight: FontWeight.w800,
-              letterSpacing: 1.2,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-              child: Column(
-                children: [
-                  for (var i = 0; i < wellnessQuestions.length; i++) ...[
-                    WellnessScoreRow(
-                      question: wellnessQuestions[i],
-                      score: scores[i],
-                    ),
-                    if (i < wellnessQuestions.length - 1)
-                      const Divider(height: 1, color: Color(0xFFEDF0ED)),
-                  ],
-                ],
-              ),
-            ),
-          ),
+            const SizedBox(height: 22),
+            _buildWellnessBreakdown(),
+          ],
           const SizedBox(height: 15),
           SizedBox(
             height: 52,
@@ -158,6 +101,107 @@ class WellnessSummaryScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildScoreCard({
+    required int percentage,
+    required String title,
+    required String message,
+    required int total,
+  }) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(22, 24, 22, 22),
+      decoration: BoxDecoration(
+        color: AppColors.mint,
+        borderRadius: BorderRadius.circular(26),
+      ),
+      child: Column(
+        children: [
+          Container(
+            width: 76,
+            height: 76,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(
+                '$percentage',
+                style: const TextStyle(
+                  color: AppColors.green,
+                  fontSize: 27,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 15),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w800,
+              letterSpacing: -0.7,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Color(0xFF526A60),
+              fontSize: 14,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 13),
+          Text(
+            '$total out of ${wellnessQuestions.length * 3} points',
+            style: const TextStyle(
+              color: Color(0xFF526A60),
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWellnessBreakdown() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text(
+          'YOUR WELLNESS PICTURE',
+          style: TextStyle(
+            color: Color(0xFF718078),
+            fontSize: 11,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 1.2,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+            child: Column(
+              children: [
+                for (var i = 0; i < wellnessQuestions.length; i++) ...[
+                  WellnessScoreRow(
+                    question: wellnessQuestions[i],
+                    score: scores[i],
+                  ),
+                  if (i < wellnessQuestions.length - 1)
+                    const Divider(height: 1, color: Color(0xFFEDF0ED)),
+                ],
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

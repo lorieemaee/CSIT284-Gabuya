@@ -5,6 +5,33 @@ import 'package:campus_wellness_tracker/main.dart';
 import 'package:campus_wellness_tracker/widgets/answer_choice_tile.dart';
 
 void main() {
+  testWidgets('home screen rearranges content for landscape orientation', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1;
+    await tester.pumpWidget(const CampusWellnessApp());
+
+    final portraitTitle = tester.getCenter(
+      find.text('Campus Wellness Tracker'),
+    );
+    final portraitCard = tester.getCenter(find.byType(Card).first);
+    expect(portraitCard.dx, closeTo(portraitTitle.dx, 1));
+
+    tester.view.physicalSize = const Size(800, 360);
+    await tester.pumpAndSettle();
+
+    final landscapeTitle = tester.getCenter(
+      find.text('Campus Wellness Tracker'),
+    );
+    final landscapeCard = tester.getCenter(find.byType(Card).first);
+    expect(landscapeTitle.dx, lessThan(landscapeCard.dx));
+    expect(tester.takeException(), isNull);
+
+    tester.view.resetPhysicalSize();
+    tester.view.resetDevicePixelRatio();
+  });
+
   testWidgets('wide answer grid displays choices in A C / B D order', (
     tester,
   ) async {
