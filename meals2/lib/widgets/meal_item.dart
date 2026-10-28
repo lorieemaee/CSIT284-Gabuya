@@ -39,6 +39,8 @@ class MealItem extends StatelessWidget {
         },
         child: Stack(
           children: [
+            Hero(tag: meal.id,
+             child: 
             FadeInImage(
               placeholder: MemoryImage(kTransparentImage),
               image: NetworkImage(meal.imageUrl),
@@ -46,6 +48,8 @@ class MealItem extends StatelessWidget {
               height: 200,
               width: double.infinity,
             ),
+            ),
+            
             Positioned(
               bottom: 0,
               left: 0,

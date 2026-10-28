@@ -1,0 +1,13 @@
+{
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.inlineSuggest.enabled": false,
+  "editor.parameterHints.enabled": true,
+  "editor.wordBasedSuggestions": "off",
+  "dart.suggestFromUnimportedLibraries": true,
+  "dart.completeFunctionCalls": true
+}
